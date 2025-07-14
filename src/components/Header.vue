@@ -46,7 +46,7 @@ const { y: scroll } = useWindowScroll()
           <div i-ri-camera-3-line />
         </RouterLink>
 
-        <a href="https://github.com/antfu" target="_blank" title="GitHub" class="lt-md:hidden">
+        <a href="https://github.com/Theoool" target="_blank" title="GitHub" class="lt-md:hidden">
           <div i-uil-github-alt />
         </a>
 
