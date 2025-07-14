@@ -9,7 +9,7 @@ let w = window.innerWidth
 let h = window.innerHeight
 
 const SCALE = 200
-const LENGTH = 5
+const LENGTH = 6
 const SPACING = 15
 
 const noise3d = createNoise3D()
@@ -35,12 +35,10 @@ function addPoints({ dotTexture, particleContainer }: { dotTexture: Texture, par
       if (existingPoints.has(id))
         continue
       existingPoints.add(id)
-
       const particle = new Particle(dotTexture)
       particle.anchorX = 0.5
       particle.anchorY = 0.5
       particleContainer.addParticle(particle)
-
       const opacity = Math.random() * 0.5 + 0.5
       points.push({ x, y, opacity, particle })
     }
@@ -105,5 +103,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="el" z--1 fixed size-screen left-0 right-0 top-0 bottom-0 pointer-events-none dark:invert />
+  <div>
+   
+    <div ref="el" z--1 fixed size-screen left-0 right-0 top-0 bottom-0 pointer-events-none dark:invert />
+  </div>
 </template>

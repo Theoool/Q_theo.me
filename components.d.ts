@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AngelLight: typeof import('./src/components/AngelLight.vue')['default']
     AnthonyFu: typeof import('./src/components/icons/AnthonyFu.vue')['default']
     AppLink: typeof import('./src/components/AppLink.vue')['default']
     ArtDots: typeof import('./src/components/ArtDots.vue')['default']
