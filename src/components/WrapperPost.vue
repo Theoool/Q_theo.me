@@ -12,10 +12,25 @@ const router = useRouter()
 const route = useRoute()
 const content = ref<HTMLDivElement>()
 
-const base = 'https://antfu.me'
-const tweetUrl = computed(() => `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Reading @antfu7\'s ${base}${route.path}\n\nI think...`)}`)
-const elkUrl = computed(() => `https://elk.zone/intent/post?text=${encodeURIComponent(`Reading @antfu@m.webtoo.ls\'s ${base}${route.path}\n\nI think...`)}`)
-const blueskyUrl = computed(() => `https://bsky.app/intent/compose?text=${encodeURIComponent(`Reading @antfu.me ${base}${route.path}\n\nI think...`)}`)
+const base = 'https://q-theo-me.vercel.app'
+const tweetUrl = computed(
+  () =>
+    `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      `Reading @antfu7\'s ${base}${route.path}\n\nI think...`
+    )}`
+)
+const elkUrl = computed(
+  () =>
+    `https://elk.zone/intent/post?text=${encodeURIComponent(
+      `Reading @antfu@m.webtoo.ls\'s ${base}${route.path}\n\nI think...`
+    )}`
+)
+const blueskyUrl = computed(
+  () =>
+    `https://bsky.app/intent/compose?text=${encodeURIComponent(
+      `Reading @antfu.me ${base}${route.path}\n\nI think...`
+    )}`
+)
 
 onMounted(() => {
   const navigate = () => {
@@ -33,34 +48,30 @@ onMounted(() => {
     }
   }
 
-  const handleAnchors = (
-    event: MouseEvent & { target: HTMLElement },
-  ) => {
+  const handleAnchors = (event: MouseEvent & { target: HTMLElement }) => {
     const link = event.target.closest('a')
 
     if (
-      !event.defaultPrevented
-      && link
-      && event.button === 0
-      && link.target !== '_blank'
-      && link.rel !== 'external'
-      && !link.download
-      && !event.metaKey
-      && !event.ctrlKey
-      && !event.shiftKey
-      && !event.altKey
+      !event.defaultPrevented &&
+      link &&
+      event.button === 0 &&
+      link.target !== '_blank' &&
+      link.rel !== 'external' &&
+      !link.download &&
+      !event.metaKey &&
+      !event.ctrlKey &&
+      !event.shiftKey &&
+      !event.altKey
     ) {
       const url = new URL(link.href)
-      if (url.origin !== window.location.origin)
-        return
+      if (url.origin !== window.location.origin) return
 
       event.preventDefault()
       const { pathname, hash } = url
       if (hash && (!pathname || pathname === location.pathname)) {
         window.history.replaceState({}, '', hash)
         navigate()
-      }
-      else {
+      } else {
         router.push({ path: pathname, hash })
       }
     }
@@ -70,20 +81,16 @@ onMounted(() => {
   useEventListener(content.value!, 'click', handleAnchors, { passive: false })
 
   setTimeout(() => {
-    if (!navigate())
-      setTimeout(navigate, 1000)
+    if (!navigate()) setTimeout(navigate, 1000)
   }, 1)
 })
 
 const ArtComponent = computed(() => {
   let art = frontmatter.art
-  if (art === 'random')
-    art = Math.random() > 0.5 ? 'plum' : 'dots'
+  if (art === 'random') art = Math.random() > 0.5 ? 'plum' : 'dots'
   if (typeof window !== 'undefined') {
-    if (art === 'plum')
-      return defineAsyncComponent(() => import('./ArtPlum.vue'))
-    else if (art === 'dots')
-      return defineAsyncComponent(() => import('./ArtDots.vue'))
+    if (art === 'plum') return defineAsyncComponent(() => import('./ArtPlum.vue'))
+    else if (art === 'dots') return defineAsyncComponent(() => import('./ArtDots.vue'))
   }
   return undefined
 })
@@ -102,11 +109,9 @@ const ArtComponent = computed(() => {
     <h1 class="mb-0 slide-enter-50">
       {{ frontmatter.display ?? frontmatter.title }}
     </h1>
-    <p
-      v-if="frontmatter.date"
-      class="opacity-50 !-mt-6 slide-enter-50"
-    >
-      {{ formatDate(frontmatter.date, false) }} <span v-if="frontmatter.duration">· {{ frontmatter.duration }}</span>
+    <p v-if="frontmatter.date" class="opacity-50 !-mt-6 slide-enter-50">
+      {{ formatDate(frontmatter.date, false) }}
+      <span v-if="frontmatter.duration">· {{ frontmatter.duration }}</span>
     </p>
     <p v-if="frontmatter.place" class="mt--4!">
       <span op50>at </span>
@@ -117,15 +122,17 @@ const ArtComponent = computed(() => {
         {{ frontmatter.place }}
       </span>
     </p>
-    <p
-      v-if="frontmatter.subtitle"
-      class="opacity-50 !-mt-6 italic slide-enter"
-    >
+    <p v-if="frontmatter.subtitle" class="opacity-50 !-mt-6 italic slide-enter">
       {{ frontmatter.subtitle }}
     </p>
     <p
       v-if="frontmatter.draft"
-      class="slide-enter" bg-orange-4:10 text-orange-4 border="l-3 orange-4" px4 py2
+      class="slide-enter"
+      bg-orange-4:10
+      text-orange-4
+      border="l-3 orange-4"
+      px4
+      py2
     >
       This is a draft post, the content may be incomplete. Please check back later.
     </p>
@@ -137,7 +144,10 @@ const ArtComponent = computed(() => {
   >
     <slot />
   </article>
-  <div v-if="route.path !== '/'" class="prose m-auto mt-8 mb-8 slide-enter animate-delay-500 print:hidden">
+  <div
+    v-if="route.path !== '/'"
+    class="prose m-auto mt-8 mb-8 slide-enter animate-delay-500 print:hidden"
+  >
     <template v-if="frontmatter.duration">
       <span font-mono op50>> </span>
       <span op50>comment on </span>
@@ -147,7 +157,7 @@ const ArtComponent = computed(() => {
       <span op25> / </span>
       <a :href="tweetUrl" target="_blank" op50>twitter</a>
     </template>
-    <br>
+    <br />
     <span font-mono op50>> </span>
     <RouterLink
       :to="route.path.split('/').slice(0, -1).join('/') || '/'"

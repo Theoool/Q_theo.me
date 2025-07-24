@@ -6,9 +6,9 @@ import fs from 'fs-extra'
 import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
 
-const DOMAIN = 'https://antfu.me'
+const DOMAIN = 'https://q-theo-me.vercel.app'
 const AUTHOR = {
-  name: 'Anthony Fu',
+  name: 'Theo',
   email: 'hi@antfu.me',
   link: DOMAIN,
 }
@@ -26,15 +26,15 @@ async function buildBlogRSS() {
   const files = await fg('pages/posts/*.md')
 
   const options = {
-    title: 'Anthony Fu',
-    description: 'Anthony Fu\' Blog',
-    id: 'https://antfu.me/',
-    link: 'https://antfu.me/',
-    copyright: 'CC BY-NC-SA 4.0 2021 © Anthony Fu',
+    title: 'Theo',
+    description: 'Theo\' Blog',
+    id: 'https://q-theo-me.vercel.app/',
+    link: 'https://q-theo-me.vercel.app/',
+    copyright: 'CC BY-NC-SA 4.0 2021 © Theo',
     feedLinks: {
-      json: 'https://antfu.me/feed.json',
-      atom: 'https://antfu.me/feed.atom',
-      rss: 'https://antfu.me/feed.xml',
+      json: 'https://q-theo-me.vercel.app/feed.json',
+      atom: 'https://q-theo-me.vercel.app/feed.atom',
+      rss: 'https://q-theo-me.vercel.app/feed.xml',
     },
   }
   const posts: any[] = (
@@ -71,8 +71,8 @@ async function buildBlogRSS() {
 
 async function writeFeed(name: string, options: FeedOptions, items: Item[]) {
   options.author = AUTHOR
-  options.image = 'https://antfu.me/avatar.png'
-  options.favicon = 'https://antfu.me/logo.png'
+  options.image = 'https://q-theo-me.vercel.app/avatar.png'
+  options.favicon = 'https://q-theo-me.vercel.app/logo.png'
 
   const feed = new Feed(options)
 
